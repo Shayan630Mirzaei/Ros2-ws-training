@@ -14,7 +14,7 @@
         <param from="$(find-pkg-share two_wheels_robot_bringup)/config/twoWheels_controllers.yaml" />
         <param name="robot_description"
            value="$(command 'xacro $(var urdf_path)')" />
-    </node>
+    </node> 
 
     <node pkg="controller_manager" exec="spawner" args = "joint_state_broadcaster"  />
     <node pkg="controller_manager" exec="spawner" args = "diff_drive_controller"  />
