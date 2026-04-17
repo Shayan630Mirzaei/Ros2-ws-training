@@ -35,6 +35,7 @@ int main()
     // cout << "velocity of motor 1 is:"<< velocity1 << endl;
     // cout << "velocity of motor 2 is:"<< velocity2 << endl;
 
+    
 
     // driver.deactivate(dxl_id1);
     // driver.deactivate(dxl_id2);
