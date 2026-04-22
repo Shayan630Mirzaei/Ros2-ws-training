@@ -21,11 +21,15 @@ namespace mobile_base_hardware{
                 on_deactivate(const rclcpp_lifecycle::State &previous_state) override;
 
             // System Interface override
-
+            hardware_interface::CallbackReturn
+                on_init(const hardware_interface::HardwareInfo &Info) override;
+            hardware_interface::return_type
+                read(const rclcpp::Time &time, const rclcpp::Duration &period);
+            hardware_interface::return_type
+                write(const rclcpp::Time &time, const rclcpp::Duration &period);
+       
         private:
-
-
-
+            std::shared_ptr<XL330Driver> driver_;
 
     }; //  class Mobile_base_hw_itf
 
