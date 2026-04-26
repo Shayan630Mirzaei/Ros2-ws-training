@@ -1,7 +1,7 @@
 #include<two_wheels_robot_hardware/mobile_base_hardware_interface.hpp>  // first we built header in include folder in this package,
                                                                         // then we call it here
 
-
+#include "hardware_interface/system_interface.hpp"
 namespace mobile_base_hardware{
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -63,9 +63,13 @@ namespace mobile_base_hardware{
         double left_vel  = driver_->getVelocityRadianPerSec(left_motor_id_);
         double right_vel = driver_->getVelocityRadianPerSec(right_motor_id_);
 
-        set_state("base_right_wheel_joint/velocity",right_vel);
-        
-        
+        set_state("base_left_wheel_joint/velocity", left_vel);
+        set_state("base_right_wheel_joint/velocity", right_vel);
+
+        set_state("base_left_wheel_joint/position",  get_state("base_left_wheel_joint/position")  + left_vel * period.seconds());
+        set_state("base_right_wheel_joint/position", get_state("base_right_wheel_joint/position") + right_vel * period.seconds());
+
+        return hardware_interface::return_type::OK;   // <-- REQUIRED
 
     }
 
@@ -73,7 +77,11 @@ namespace mobile_base_hardware{
 
 
     hardware_interface::return_type Mobile_base_hw_itf::write(const rclcpp::Time &time, const rclcpp::Duration &period)
-    {}
+    {
+        (void)time;
+        return hardware_interface::return_type::OK;   // <-- REQUIRED
+       
+    }
 
 
 }    
