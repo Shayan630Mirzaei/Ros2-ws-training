@@ -39,6 +39,11 @@ namespace mobile_base_hardware{
     hardware_interface::CallbackReturn  Mobile_base_hw_itf::on_activate(const rclcpp_lifecycle::State &previous_state)
      {
         (void)previous_state;
+        set_state("base_left_wheel_joint/velocity",  0.0);
+        set_state("base_right_wheel_joint/velocity", 0.0);
+        set_state("base_left_wheel_joint/position",  0.0);
+        set_state("base_right_wheel_joint/position", 0.0);
+
         driver_->activateWithVelocityMode(left_motor_id_);
         driver_->activateWithVelocityMode(right_motor_id_);
         return hardware_interface::CallbackReturn::SUCCESS;  
@@ -55,6 +60,7 @@ namespace mobile_base_hardware{
 
     }
 
+
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     hardware_interface::return_type Mobile_base_hw_itf::read(const rclcpp::Time &time, const rclcpp::Duration &period)
@@ -69,18 +75,19 @@ namespace mobile_base_hardware{
         set_state("base_left_wheel_joint/position",  get_state("base_left_wheel_joint/position")  + left_vel * period.seconds());
         set_state("base_right_wheel_joint/position", get_state("base_right_wheel_joint/position") + right_vel * period.seconds());
 
-        return hardware_interface::return_type::OK;   // <-- REQUIRED
+        return hardware_interface::return_type::OK; 
 
     }
-
-
-
-
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     hardware_interface::return_type Mobile_base_hw_itf::write(const rclcpp::Time &time, const rclcpp::Duration &period)
     {
         (void)time;
-        return hardware_interface::return_type::OK;   // <-- REQUIRED
-       
+        (void)period;
+        driver_->setTargetVelocityRadianPerSec(left_motor_id_ , get_command("base_left_wheel_joint/velocity",left_vel));
+        driver_->setTargetVelocityRadianPerSec(right_motor_id_, get_command("base_right_wheel_joint/velocity", right_vel));
+        return hardware_interface::return_type::OK; 
+        
     }
 
 
