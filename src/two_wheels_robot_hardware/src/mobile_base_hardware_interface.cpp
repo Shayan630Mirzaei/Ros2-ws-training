@@ -6,20 +6,20 @@ namespace mobile_base_hardware{
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    hardware_interface::CallbackReturn Mobile_base_hw_itf::on_init(const hardware_interface::HardwareInfo &info) 
-    {
-       if ( hardware_interface::SystemInterface::on_init(info) != hardware_interface::CallbackReturn::SUCCESS)
-       {
-        return hardware_interface::CallbackReturn::ERROR;
-       }
-       info_           = info;
-       left_motor_id_  = 10;
-       right_motor_id_ = 20;
-       port_           = "/dev/ttyACM0";
-       driver_         = std::make_shared<XL330Driver>(port_);
+    hardware_interface::CallbackReturn
+    Mobile_base_hw_itf::on_init(
+    const hardware_interface::HardwareComponentInterfaceParams & params)
+{
+    info_ = params.hardware_info;
 
-       return hardware_interface::CallbackReturn::SUCCESS;
-    }
+    left_motor_id_  = 10;
+    right_motor_id_ = 20;
+    port_           = "/dev/ttyACM0";
+
+    driver_ = std::make_shared<XL330Driver>(port_);
+
+    return hardware_interface::CallbackReturn::SUCCESS;
+}
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -55,7 +55,7 @@ namespace mobile_base_hardware{
     {
         (void)previous_state;
        driver_->deactivate(left_motor_id_);
-       driver_->deactivate(left_motor_id_);
+       driver_->deactivate(right_motor_id_);
        return hardware_interface::CallbackReturn::SUCCESS;  
 
     }
@@ -84,11 +84,14 @@ namespace mobile_base_hardware{
     {
         (void)time;
         (void)period;
-        driver_->setTargetVelocityRadianPerSec(left_motor_id_ , get_command("base_left_wheel_joint/velocity",left_vel));
-        driver_->setTargetVelocityRadianPerSec(right_motor_id_, get_command("base_right_wheel_joint/velocity", right_vel));
+        driver_->setTargetVelocityRadianPerSec(left_motor_id_ , get_command("base_left_wheel_joint/velocity"));
+        driver_->setTargetVelocityRadianPerSec(right_motor_id_, get_command("base_right_wheel_joint/velocity"));
         return hardware_interface::return_type::OK; 
         
     }
 
 
 }    
+
+#include "pluginlib/class_list_macros.hpp"
+PLUGINLIB_EXPORT_CLASS(mobile_base_hardware::Mobile_base_hw_itf , hardware_interface::SystemInterface)

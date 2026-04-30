@@ -7,7 +7,7 @@
 
 namespace mobile_base_hardware{
 
-    class Mobile_base_hw_itf : public hardware_interface :: SystemInterface
+    class Mobile_base_hw_itf : public hardware_interface::SystemInterface
     {
         public:
             // lifecycle node override
@@ -22,7 +22,7 @@ namespace mobile_base_hardware{
 
             // System Interface override
             hardware_interface::CallbackReturn
-                on_init(const hardware_interface::HardwareInfo &Info) override;
+                on_init(const hardware_interface::HardwareComponentInterfaceParams & params) override;
             hardware_interface::return_type
                 read(const rclcpp::Time &time, const rclcpp::Duration &period);
             hardware_interface::return_type
@@ -30,6 +30,9 @@ namespace mobile_base_hardware{
        
         private:
             std::shared_ptr<XL330Driver> driver_;
+            int left_motor_id_;
+            int right_motor_id_;
+            std::string port_;
 
     }; //  class Mobile_base_hw_itf
 
