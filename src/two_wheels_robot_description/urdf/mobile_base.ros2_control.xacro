@@ -4,8 +4,10 @@
     <ros2_control name = "MobileBaseHardwareInterface" type = "system">
 
         <hardware>
-            <plugin>mock_components/GenericSystem</plugin>
-            <param name="calculate_dynamics">true</param>
+            <!--<plugin>mock_components/GenericSystem</plugin>     Mock was when I started this project, but after I finished HW innterface cpp, i changed it to below
+              <param name="calculate_dynamics">true</param> -->
+            <plugin> mobile_base_hardware/Mobile_base_hw_itf</plugin> 
+
         </hardware>
 
         <joint name = "base_right_wheel_joint">
