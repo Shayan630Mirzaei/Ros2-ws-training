@@ -31,6 +31,11 @@ install(
 )
 
 install(
+  FILES two_wheels_robot_hardware_interface.xml
+  DESTINATION share/${PROJECT_NAME}
+)
+
+install(
   DIRECTORY include
   DESTINATION include
 )

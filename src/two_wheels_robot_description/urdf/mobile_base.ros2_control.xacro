@@ -1,13 +1,15 @@
 <?xml version="1.0"?>
 <robot name="my_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <ros2_control name = "MobileBaseHardwareInterface" type = "system">
+    <ros2_control name = "MobileBase" type = "system"> // "MobileBase" is the name controller_manage and resource_manger know this robot with
 
         <hardware>
             <!--<plugin>mock_components/GenericSystem</plugin>     Mock was when I started this project, but after I finished HW innterface cpp, i changed it to below
               <param name="calculate_dynamics">true</param> -->
-            <plugin> mobile_base_hardware/Mobile_base_hw_itf</plugin> 
-
+            <plugin>mobile_base_hardware/Mobile_base_hw_itf</plugin> 
+            <param name="left_motor_id">10</param>              // we will call them in on_init
+            <param name="right_motor_id">20</param>             // we will call them in on_init
+            <param name="dynamixel_port">/dev/ttyACM0</param>   // we will call them in on_init
         </hardware>
 
         <joint name = "base_right_wheel_joint">

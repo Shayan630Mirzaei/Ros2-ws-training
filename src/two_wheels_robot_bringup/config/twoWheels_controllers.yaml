@@ -1,7 +1,7 @@
 # This config file is used by ros2_control
 controller_manager:
   ros__parameters:
-    update_rate: 50  # Hz
+    update_rate: 1  # Hz
 
     joint_state_broadcaster:  # I can call it anything like : shayan_joint_broadcaster
       type: joint_state_broadcaster/JointStateBroadcaster

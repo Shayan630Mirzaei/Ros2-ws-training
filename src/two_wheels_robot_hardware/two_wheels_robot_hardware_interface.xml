@@ -1,7 +1,7 @@
 <library path = "two_wheels_robot_hardware">
     <class name = "mobile_base_hardware/Mobile_base_hw_itf"
            type = "mobile_base_hardware::Mobile_base_hw_itf"
-           base_class_type = " hardware_interface::SystemInterface">
+           base_class_type = "hardware_interface::SystemInterface">
         <description>
             Hardware interface for a mobile base with two Dynamixel motors
         </description>
