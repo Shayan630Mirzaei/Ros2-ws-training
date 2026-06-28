@@ -125,7 +125,4 @@ hardware_interface::return_type Mobile_base_hw_itf::write(const rclcpp::Time & t
 } // namespace mobile_base_hardware
 
 #include "pluginlib/class_list_macros.hpp"
-
-PLUGINLIB_EXPORT_CLASS(
-    mobile_base_hardware::Mobile_base_hw_itf,
-    hardware_interface::SystemInterface)
+PLUGINLIB_EXPORT_CLASS(mobile_base_hardware::Mobile_base_hw_itf,hardware_interface::SystemInterface)
